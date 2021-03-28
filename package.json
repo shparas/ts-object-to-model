@@ -1,6 +1,6 @@
 {
     "name": "ts-object-to-model",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Object to model mapper for TypeScript projects",
     "files": [
         "dist/**/*"
