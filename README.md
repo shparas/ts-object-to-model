@@ -1,6 +1,7 @@
 [![npm version](https://img.shields.io/npm/v/ts-object-to-model.svg)](https://www.npmjs.com/package/ts-object-to-model)
 [![Downloads](https://img.shields.io/npm/dm/ts-object-to-model.svg)](https://www.npmjs.com/package/ts-object-to-model)
 
+**This README is still a draft and will be updated as the development of library progresses.*
 
 # ts-object-to-model
 **ts-object-to-model** is a tool for mapping an object to a predefined model for TypeScript projects.
@@ -31,7 +32,7 @@ class TestModel {
     @field('_id', 'string')
     public id?: string = undefined; // will be mapped from _id as a string type
 
-    public firstname?: string = undefined; // if strict, throws error if not found in a source object
+    public firstname?: string = undefined; // if strict is true, throws error if not found in a source object
     public lastname?: string = undefined;
 
     @optional
@@ -46,12 +47,13 @@ let mainFunction = () => {
         _id: 'myId',
         firstname: 'First',
         lastname: 'Last',
-
         status: 'active',
         expireTime: -1,
     };
 
-    let properModel = take(randomObject).mapToType(TestModel);  // mapToType(TestModel, true) for strict mapping (throws error if property not found in source object)
+    let properModel = take(randomObject).mapToType(TestModel); // mapToType(TestModel, true) for strict mapping (throws error if property not found in source object)
+    
+    console.log(JSON.stringify(properModel)); // {"id":"myId","firstname":"First","lastname":"Last","status":"active","expireTime":1616982634712}
 } 
 ```
 
