@@ -49,6 +49,7 @@ let mainFunction = () => {
         lastname: 'Last',
         status: 'active',
         expireTime: -1,
+        someOtherProps: "Will be ignored"
     };
 
     let properModel = take(randomObject).mapToType(TestModel); // mapToType(TestModel, true) for strict mapping (throws error if property not found in source object)
