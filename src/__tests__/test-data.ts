@@ -116,3 +116,5 @@ export class EmptyValidateTestModel {
     public hasAllLowerCase?: string = undefined;
 }
 //#endregion
+
+test('Data files, nothing to test here.', ()=>{})
