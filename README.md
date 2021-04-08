@@ -33,8 +33,8 @@ The library is to be used in a TypeScript project with the [experimental decorat
 import { take, optional, field, ignore, validate } from 'ts-object-to-model';
 
 class TestModel {
-    @field({ sourceName: '_id', destinationType: 'string' })
-    public id?: string = undefined; // will be mapped from _id as a string type
+    @field({ sourceName: '_id', destinationType: 'string', transformer: (x) => x.toLowerCase() })
+    public id?: string = undefined; // will be mapped from _id as a string type after lowercase transformation
 
     public firstname?: string = undefined; // if strict is true, throws error if not found in a source object
     public lastname?: string = undefined;
@@ -62,7 +62,7 @@ let mainFunction = () => {
 
     let properModel = take(randomObject).mapToType(TestModel); // mapToType(TestModel, false) for non-strict mapping (doesn't throws error if property not found in source object)
 
-    console.log(JSON.stringify(properModel)); // {"id":"myId","firstname":"First","lastname":"Last","gender":"m","status":"active","expireTime":SOMENUMBER}
+    console.log(JSON.stringify(properModel)); // {"id":"myid","firstname":"First","lastname":"Last","gender":"m","status":"active","expireTime":SOMENUMBER}
 };
 
 mainFunction();
@@ -96,6 +96,7 @@ The @field is used to map one property to another. It takes an object with follo
     -   **Types.array**: Work in progress.
     -   **Types.object**: Work in progress.
 -   **validators**: An array of function that takes the property value as argument and returns true/false based on validation. If validation fails (any of the function returns false), it will throw error and the transformation will not occur. Can be ignored if there's no validation to run.
+-   **transformer**: A function that takes the property value as argument and returns a value after transformation (based on the function user supplies). Can be ignored if no transformation is required.
 
 **Example Usage:**
 
@@ -103,13 +104,14 @@ The @field is used to map one property to another. It takes an object with follo
 @field({
     sourceName: '_id',
     destinationType: Types.string,
+    transformer: (x) => x.toLowerCase(),
     validators: [(val) => val !== ""]
 })
 public id?: string = undefined;
 ```
 
 **Explanation:**  
-The above code maps the \__id_ field from raw JSON or JS object into _id_ as a string type and as long as the \_id is not empty. If its empty, throws error and transformation wont take place.
+The above code maps the \__id_ field from raw JSON or JS object into _id_ as a lowercase string, as long as the \_id is not empty. If its empty, throws error and object transformation wont take place.
 
 ### _@optional_ Decorator
 
@@ -154,6 +156,10 @@ public id?: string = undefined;
 The above code maps the _id_ as long as the value of _id_ is all lowercase. If any of the character is uppercase, it will throw out error and mapping stops.
 
 ## <a name="version-history"></a>Version History
+
+### Version 2.1.0:
+
+-   Support for transformer in field object
 
 ### Version 2.0.0:
 
