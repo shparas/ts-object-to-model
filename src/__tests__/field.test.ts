@@ -7,7 +7,7 @@ test('Valid @field and take/map tester', () => {
     let expected = take(originalModel).mapToType(TestModel);
 
     expect(expected.id).toBe(originalModel.id);
-    expect(expected.name).toBe(originalModel._name);
+    expect(expected.name).toBe('Hello ' + originalModel._name);
 
     expect(expected.nestedModel1?.nestedId).toBe(originalModel.nestedModel.nestedId);
     expect(expected.nestedModel1?.nestedName).toBe(originalModel.nestedModel._nestedName);

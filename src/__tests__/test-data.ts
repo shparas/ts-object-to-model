@@ -61,6 +61,7 @@ export class TestModel {
         sourceName: '_name',
         destinationType: Types.string,
         validators: [lowerCaseValidator],
+        transformer: (x) => 'Hello ' + x,
     })
     public name?: string = undefined;
 
@@ -117,4 +118,4 @@ export class EmptyValidateTestModel {
 }
 //#endregion
 
-test('Data files, nothing to test here.', ()=>{})
+test('Data files, nothing to test here.', () => {});

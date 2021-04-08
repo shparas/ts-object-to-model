@@ -41,7 +41,7 @@ class Mappable {
 
             // Map
             if (typeof field.destinationType === 'string') {
-                // if type is defined as string, i.e. for basic type
+                // If type is defined as string, i.e. for basic type
                 if (field.destinationType.toLowerCase() === Types.string) {
                     outputModel[prop] = from[field.sourceName].toString();
                 } else if (field.destinationType.toLowerCase() === Types.integer) {
@@ -54,7 +54,7 @@ class Mappable {
                     outputModel[prop] = from[field.sourceName];
                 }
             } else {
-                // if type is defined as object, i.e. for nested objects
+                // If type is defined as object, i.e. for nested objects
                 outputModel[prop] = from[field.sourceName]
                     ? take(from[field.sourceName]).mapToType(field.destinationType, strict)
                     : (undefined as any);
@@ -64,6 +64,9 @@ class Mappable {
             if (strict && outputModel[prop] === undefined && !isOptional(outputModel, prop, from[field.sourceName])) {
                 throw new Error(prop + ' value not provided.');
             }
+
+            // Transform
+            outputModel[prop] = field.transformer(outputModel[prop]);
         }
 
         return outputModel;
